@@ -20,5 +20,11 @@ export async function patchBookReadStatus(req: Request, res: Response) {
   const finished = String(req.query.finished);
   if (!['true', 'false', '1', '0', 'TRUE', 'FALSE'].includes(finished)) throw invalidDataError('Invalid finished status');
   await booksService.patchFinishedStatus(bookId, finished);
-  return res.sendStatus(httpStatus.CREATED);
+  return res.sendStatus(httpStatus.OK);
+};
+
+export async function deleteBook(req: Request, res: Response) {
+  const bookId = Number(req.params.id);
+  await booksService.deleteBook(bookId);
+  return res.sendStatus(httpStatus.OK);
 };

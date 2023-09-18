@@ -20,8 +20,13 @@ async function patchFinishedStatus(bookId: number, finished: string): Promise<vo
     await bookRepository.patchFinishedStatus(bookId, finishedBoolean);
 };
 
+async function deleteBook(bookId: number): Promise<void> {
+    await bookRepository.deleteBook(bookId);
+};
+
 export const booksService = {
     getAllBooks,
     createBook,
     patchFinishedStatus,
+    deleteBook,
 };

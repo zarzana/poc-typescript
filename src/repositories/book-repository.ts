@@ -27,8 +27,16 @@ async function patchFinishedStatus(id: number, status: boolean): Promise<void> {
     `);
 };
 
+async function deleteBook(id: number): Promise<void> {
+    await db.query(`
+        DELETE FROM books
+            WHERE book_id = ${id};
+    `);
+};
+
 export const bookRepository = {
     findAll,
     insertOne,
     patchFinishedStatus,
+    deleteBook,
 };
