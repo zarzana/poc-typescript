@@ -8,4 +8,9 @@ export function handleApplicationErrors(err: ApplicationError | Error, _req: Req
             message: err.message,
         });
     }
+    if (err.name === 'InvalidDataError') {
+        return res.status(httpStatus.UNPROCESSABLE_ENTITY).send({
+            message: err.message,
+        });
+    }
 }

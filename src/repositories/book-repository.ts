@@ -1,6 +1,7 @@
 import { Book } from "protocols";
 import { db } from "../database/database";
-import dayjs = require("dayjs");
+import dayjs from "dayjs";
+import { notFoundError } from "../errors";
 
 async function findAll(): Promise<any[]> {
     const queryResult = await db.query(`
@@ -8,6 +9,16 @@ async function findAll(): Promise<any[]> {
             FROM books;
     `);
     return queryResult.rows;
+};
+
+async function findOne(id: number): Promise<any[]> {
+    const queryResult = await db.query(`
+        SELECT *
+            FROM books
+            WHERE book_id = ${id};
+    `);
+    if (queryResult.rows[0] === undefined) throw notFoundError();
+    return queryResult.rows[0];
 };
 
 async function insertOne(book: Book): Promise<void> {
@@ -28,6 +39,8 @@ async function patchFinishedStatus(id: number, status: boolean): Promise<void> {
 };
 
 async function deleteBook(id: number): Promise<void> {
+    await findOne(id);
+    typeof await findOne(id);
     await db.query(`
         DELETE FROM books
             WHERE book_id = ${id};
