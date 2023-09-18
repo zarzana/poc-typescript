@@ -1,5 +1,5 @@
 import { validateBody } from '../middlewares/validation-middleware';
-import { createBook, getAllBooks } from '../controllers/books-controller';
+import { createBook, getAllBooks, patchBookReadStatus } from '../controllers/books-controller';
 import { Router } from 'express';
 import { createBookSchema } from '../schemas/books-schemas';
 
@@ -8,7 +8,7 @@ const booksRouter = Router();
 booksRouter
     .get('/', getAllBooks)
     .post('/', validateBody(createBookSchema), createBook)
-//    .patch('/:id', patchBookReadStatus)
+    .patch('/:id', patchBookReadStatus)  // uses query to set finished
 //    .delete('/:id', deleteBook);
 
 export { booksRouter };
